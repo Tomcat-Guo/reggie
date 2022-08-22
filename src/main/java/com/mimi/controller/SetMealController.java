@@ -1,5 +1,6 @@
 package com.mimi.controller;
 
+
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mimi.common.R;
@@ -116,14 +117,13 @@ public class SetMealController {
     }
 
     @GetMapping("/list")
-    public R<List<Dish>> getByCategoryId(Dish dish){
-        LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(dish.getCategoryId()!=null,Dish::getCategoryId,dish.getCategoryId());
-        //只显示启售状态
-        lqw.eq(Dish::getStatus,1);
-        lqw.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
-        List<Dish> dishes = dishService.list(lqw);
-        return R.success(dishes);
+    public R<List<Setmeal>> getByCategoryId(Setmeal setmeal){
+        LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(setmeal.getCategoryId()!=null,Setmeal::getCategoryId,setmeal.getCategoryId());
+        lqw.eq(Setmeal::getStatus,1);
+        lqw.orderByDesc(Setmeal::getUpdateTime);
+        List<Setmeal> list = setMealService.list(lqw);
+        return R.success(list);
     }
 
 
