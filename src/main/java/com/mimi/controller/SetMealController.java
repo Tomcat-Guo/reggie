@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mimi.common.R;
 import com.mimi.domain.Category;
+import com.mimi.domain.Dish;
 import com.mimi.domain.Setmeal;
 import com.mimi.domain.SetmealDto;
 import com.mimi.service.CategoryService;
+import com.mimi.service.DishService;
 import com.mimi.service.SetMealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -26,6 +28,9 @@ public class SetMealController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private DishService dishService;
 
     /**
      * 新增套餐
@@ -108,6 +113,17 @@ public class SetMealController {
     public R<String> changeStatus(@PathVariable Integer status, @RequestParam List<Long> id){
         setMealService.changeStatus(status,id);
         return R.success("成功修改套餐状态");
+    }
+
+    @GetMapping("/list")
+    public R<List<Dish>> getByCategoryId(Dish dish){
+        LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(dish.getCategoryId()!=null,Dish::getCategoryId,dish.getCategoryId());
+        //只显示启售状态
+        lqw.eq(Dish::getStatus,1);
+        lqw.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+        List<Dish> dishes = dishService.list(lqw);
+        return R.success(dishes);
     }
 
 
