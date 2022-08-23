@@ -42,7 +42,7 @@ public class ShoppingCartController {
     public R<String> add(HttpServletRequest request, @RequestBody ShoppingCart shoppingCart){
         log.info(shoppingCart.toString());
 
-        LambdaQueryWrapper<ShoppingCart>
+//        LambdaQueryWrapper<ShoppingCart>
 
         Long userId = (Long) request.getSession().getAttribute("user");
         BaseContext.setCurrentId(userId);
