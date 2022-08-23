@@ -25,11 +25,6 @@
       <change afterPath="$PROJECT_DIR$/../SSM_Deomo/src/main/resources/jdbc.properties" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SSM_Deomo/src/main/webapp/pages/book.html" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../SSM_Deomo/src/test/java/com/mimi/service/BookServiceTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/mimi/controller/ShoppingCartController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/mimi/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/mimi/dao/UserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/mimi/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/mimi/service/impl/UserServiceImpl.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../springMVC_demo/src/main/java/com/mimi/config/ServletContainersInitConfig.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../springMVC_demo/src/main/java/com/mimi/config/SpringMVCConfig.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/../springMVC_demo/src/main/java/com/mimi/controller/UserController.java" afterDir="false" />
@@ -56,14 +51,6 @@
       <change beforePath="$PROJECT_DIR$/../JavaWeb" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaWeb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../Javaweb-servlet/target/tomcat/logs/access_log.2022-08-08" beforeDir="false" afterPath="$PROJECT_DIR$/../Javaweb-servlet/target/tomcat/logs/access_log.2022-08-08" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mimi/controller/SetMealController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mimi/controller/SetMealController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/mimi/filter/LoginCheckFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/mimi/filter/LoginCheckFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/front/js/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/front/js/request.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mimi/controller/SetMealController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mimi/controller/SetMealController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mimi/filter/LoginCheckFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mimi/filter/LoginCheckFilter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mimi/service/impl/DishServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mimi/service/impl/DishServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/mimi/service/impl/SetMealServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/mimi/service/impl/SetMealServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/static/front/js/request.js" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/static/front/js/request.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -222,7 +209,7 @@
       <workItem from="1660712809555" duration="23288000" />
       <workItem from="1660740347251" duration="20819000" />
       <workItem from="1660823862434" duration="9914000" />
-      <workItem from="1660896092103" duration="40494000" />
+      <workItem from="1660896092103" duration="41420000" />
     </task>
     <servers />
   </component>
