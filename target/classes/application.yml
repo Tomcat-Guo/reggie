@@ -21,4 +21,4 @@ mybatis-plus:
       logic-not-delete-value: 0
 
 reggie:
-  path: /Users/zhiqiang.guo/IdeaProjects/reggie/src/main/resources/static/images/
+  path: C:\Users\Tomcat\Desktop\reggie\reggie\src\main\resources\static\images\

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="reggie@localhost" uuid="721cbeef-7fea-499f-adac-e20877f559f0">
+    <data-source source="LOCAL" name="reggit@localhost" uuid="5d04366f-6333-46ae-a0b9-6785be732a3f">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://localhost:3306/reggie</jdbc-url>
+      <jdbc-url>jdbc:mysql://localhost:3306/reggit</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
