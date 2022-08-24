@@ -12,6 +12,8 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
@@ -22,29 +24,28 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/login")
-    public R<User> login(HttpServletRequest request, @RequestBody User user){
-        String phone = user.getPhone();
+    public R<User> login(HttpSession session, @RequestBody Map map){
+        String phone = map.get("phone").toString();
 
-        //2. 根据username查询数据库
+        //2. 根据phone查询数据库
         LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<User>();
         lqw.eq(User::getPhone,phone);
-        User u = userService.getOne(lqw);
+        User user = userService.getOne(lqw);
 
 //        log.info(u.toString());
 //        log.info("ID为{}",u.getId());
-
-        if (u == null){
-            throw new CustomException("用户不存在");
+        //如果user不存在，自动注册
+        if (user == null){
+            user = new User();
+            user.setPhone(phone);
+            user.setStatus(1);
+            userService.save(user);
         }
 
-        //4. 对比禁用状态
-        if (u.getStatus()!=1){
-            return R.error("账户已被禁用");
-        }
 
         //5. id存入session
-        request.getSession().setAttribute("user",u.getId());
-        return R.success(u);
+        session.setAttribute("user",user.getId());
+        return R.success(user);
     }
 
     /**

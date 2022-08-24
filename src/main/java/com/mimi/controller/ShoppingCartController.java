@@ -1,6 +1,7 @@
 package com.mimi.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.mimi.common.BaseContext;
 import com.mimi.common.R;
 import com.mimi.domain.Dish;
@@ -38,26 +39,41 @@ public class ShoppingCartController {
         return R.success(list);
     }
 
+    /**
+     * 添加到购物车
+     * @param request
+     * @param shoppingCart
+     * @return
+     */
     @PostMapping("/add")
     public R<String> add(HttpServletRequest request, @RequestBody ShoppingCart shoppingCart){
-        log.info(shoppingCart.toString());
 
-//        LambdaQueryWrapper<ShoppingCart>
-
-        Long userId = (Long) request.getSession().getAttribute("user");
-        BaseContext.setCurrentId(userId);
-        shoppingCart.setUserId(userId);
-
-        String dishName = shoppingCart.getName();
-        LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(Dish::getName,dishName);
-        Dish dish = dishService.getOne(lqw);
-        Long dishId = dish.getId();
-        shoppingCart.setDishId(dishId);
-
-        log.info(shoppingCart.toString());
-        shoppingCartService.save(shoppingCart);
-        log.info(shoppingCart.toString());
+        shoppingCartService.add(request,shoppingCart);
         return R.success("成功添加到购物车");
+    }
+
+    /**
+     * 清空购物车
+     * @return
+     */
+    @DeleteMapping("/clean")
+    public R<String> clean(){
+        shoppingCartService.remove(null);
+        return R.success("成功清空");
+    }
+
+    @PostMapping("/sub")
+    public R<String> sub(@RequestBody ShoppingCart shoppingCart){
+        LambdaQueryWrapper<ShoppingCart> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(ShoppingCart::getSetmealId,shoppingCart.getSetmealId());
+        ShoppingCart one = shoppingCartService.getOne(lqw);
+        if (one.getNumber()==1){
+            shoppingCartService.removeById(one);
+            return R.success("数量为1，删除");
+        }
+        LambdaUpdateWrapper<ShoppingCart> luw = new LambdaUpdateWrapper<>();
+        luw.set(one.getNumber()>1,ShoppingCart::getNumber,one.getNumber()-1);
+        shoppingCartService.update(luw);
+        return R.success("数量-1");
     }
 }

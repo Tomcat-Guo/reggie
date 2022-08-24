@@ -4,13 +4,11 @@ package com.mimi.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mimi.common.R;
-import com.mimi.domain.Category;
-import com.mimi.domain.Dish;
-import com.mimi.domain.Setmeal;
-import com.mimi.domain.SetmealDto;
+import com.mimi.domain.*;
 import com.mimi.service.CategoryService;
 import com.mimi.service.DishService;
 import com.mimi.service.SetMealService;
+import com.mimi.service.ShoppingCartService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,9 @@ public class SetMealController {
 
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     /**
      * 新增套餐
@@ -124,6 +125,14 @@ public class SetMealController {
         lqw.orderByDesc(Setmeal::getUpdateTime);
         List<Setmeal> list = setMealService.list(lqw);
         return R.success(list);
+    }
+
+    @GetMapping("/dish/{id}")
+    public R<ShoppingCart> getDishDetail(@PathVariable Long id){
+        LambdaQueryWrapper<ShoppingCart> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(ShoppingCart::getDishId,id);
+        ShoppingCart shoppingCart = shoppingCartService.getOne(lqw);
+        return R.success(shoppingCart);
     }
 
 

@@ -400,6 +400,7 @@
               }
               const res = await addCartApi(params)
               if(res.code === 1){
+                this.getDishList()
                 this.dishList.forEach(dish=>{
                   if(dish.id === item.id){
                     dish.number = res.data.number
@@ -435,6 +436,7 @@
                   item.number = (res.data.number === 0 ? undefined : res.data.number)
                 }
                 this.getCartData()
+                  this.getDishList()
                 }else{
                   this.$notify({ type:'warning', message:res.msg});
                 }
@@ -465,6 +467,7 @@
                 })
                 console.log(this.dishList)
                 this.getCartData()
+                this.getDishList()
               }else{
                 this.$notify({ type:'warning', message:res.msg});
               }
@@ -483,6 +486,7 @@
                   }
                 })
                 this.getCartData()
+                  this.getDishList()
                 }else{
                   this.$notify({ type:'warning', message:res.msg});
                 }
