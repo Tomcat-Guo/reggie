@@ -17,17 +17,14 @@ public class SetmealDish implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
 
     //套餐id
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long setmealId;
 
 
     //菜品id
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long dishId;
 
 

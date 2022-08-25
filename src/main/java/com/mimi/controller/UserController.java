@@ -42,7 +42,6 @@ public class UserController {
             userService.save(user);
         }
 
-
         //5. id存入session
         session.setAttribute("user",user.getId());
         return R.success(user);
@@ -52,9 +51,9 @@ public class UserController {
      * 退出
      */
     @PostMapping("/loginout")
-    public R<String> logout(HttpServletRequest request){
+    public R<String> logout(HttpSession session){
         //1. 清理session员工ID
-        request.getSession().removeAttribute("user");
+        session.removeAttribute("user");
         return R.success("退出成功");
     }
 }

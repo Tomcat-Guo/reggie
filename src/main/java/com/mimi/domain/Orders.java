@@ -15,7 +15,6 @@ public class Orders implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     //订单号
@@ -26,11 +25,9 @@ public class Orders implements Serializable {
 
 
     //下单用户id
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
 
     //地址id
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long addressBookId;
 
 

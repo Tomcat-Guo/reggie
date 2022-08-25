@@ -15,22 +15,18 @@ public class ShoppingCart implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     //名称
     private String name;
 
     //用户id
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long userId;
 
     //菜品id
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long dishId;
 
     //套餐id
-    @JsonSerialize(using = ToStringSerializer.class)
     private Long setmealId;
 
     //口味
