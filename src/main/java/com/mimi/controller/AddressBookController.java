@@ -36,7 +36,7 @@ public class AddressBookController {
         return R.success(list);
     }
 
-    @PutMapping("/default")
+    @PutMapping("default")
     public R<AddressBook> setDefaultAddress(@RequestBody AddressBook addressBook){
         LambdaUpdateWrapper<AddressBook> luw = new LambdaUpdateWrapper<>();
         luw.eq(AddressBook::getUserId,BaseContext.getCurrentID()).set(AddressBook::getIsDefault,0);
@@ -47,7 +47,34 @@ public class AddressBookController {
         return R.success(addressBook);
     }
 
+    @GetMapping("default")
+    public R<AddressBook> getDefaultAddress(){
+        LambdaQueryWrapper<AddressBook> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(AddressBook::getUserId,BaseContext.getCurrentID()).eq(AddressBook::getIsDefault,1);
+        AddressBook addressBook = addressBookService.getOne(lqw);
+        return R.success(addressBook);
+    }
 
+    @GetMapping("/{id}")
+    public R getOne(@PathVariable Long id){
+        AddressBook addressBook = addressBookService.getById(id);
+        if (null != addressBook){
+            return R.success(addressBook);
+        }
+        return R.error("查无id");
+    }
+
+    @PutMapping
+    public R<AddressBook> update(@RequestBody AddressBook addressBook){
+        addressBookService.updateById(addressBook);
+        return R.success(addressBook);
+    }
+
+    @DeleteMapping
+    public R<String> delete(Long ids){
+        addressBookService.removeById(ids);
+        return R.success("删除成功");
+    }
 
 
 }

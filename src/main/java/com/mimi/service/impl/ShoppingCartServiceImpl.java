@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -32,10 +33,10 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartDao, Shoppi
     private DishFlavorService dishFlavorService;
 
     @Override
-    public void add(HttpServletRequest request, ShoppingCart shoppingCart) {
+    public void add(HttpSession session, ShoppingCart shoppingCart) {
         //添加userID
-        Long userId = (Long) request.getSession().getAttribute("user");
-        BaseContext.setCurrentId(userId);
+        Long userId = (Long) session.getAttribute("user");
+//        BaseContext.setCurrentId(userId);
         shoppingCart.setUserId(userId);
 
         //根据名字添加dishID
@@ -53,9 +54,10 @@ public class ShoppingCartServiceImpl extends ServiceImpl<ShoppingCartDao, Shoppi
 //        shoppingCart.setDishFlavor(dishFlavor.getValue());
 
         //判断菜品是否已在购物车，是的话数量+1
-        LambdaQueryWrapper<ShoppingCart> lqw2 = new LambdaQueryWrapper<>();
-        lqw2.eq(ShoppingCart::getName,shoppingCart.getName());
-        ShoppingCart one = this.getOne(lqw2);
+        LambdaQueryWrapper<ShoppingCart> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(shoppingCart.getName() !=null, ShoppingCart::getName,shoppingCart.getName());
+        lqw.eq(shoppingCart.getUserId() != null,ShoppingCart::getUserId,userId);
+        ShoppingCart one = this.getOne(lqw);
         if (one != null){
             LambdaUpdateWrapper<ShoppingCart> luw = new LambdaUpdateWrapper<>();
             luw.eq(ShoppingCart::getName,shoppingCart.getName()).set(ShoppingCart::getNumber,one.getNumber()+1);

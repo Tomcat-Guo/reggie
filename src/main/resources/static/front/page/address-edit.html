@@ -95,6 +95,7 @@
                         history.go(-1)
                     },
                     async initData(){
+                        console.log(window.location.search)
                         const params = parseUrl(window.location.search)
                         this.id = params.id
                         if(params.id){

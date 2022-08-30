@@ -33,6 +33,9 @@ public class DishController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private DishFlavorService dishFlavorService;
+
     /**
      * 查询菜品
      * @param page
@@ -126,14 +129,24 @@ public class DishController {
     }
 
     @GetMapping("/list")
-    public R<List<Dish>> getByCategoryId(Dish dish){
+    public R<List<DishDto>> getByCategoryId(Dish dish){
         LambdaQueryWrapper<Dish> lqw = new LambdaQueryWrapper<>();
         lqw.eq(dish.getCategoryId()!=null,Dish::getCategoryId,dish.getCategoryId());
         //只显示启售状态
         lqw.eq(Dish::getStatus,1);
         lqw.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
         List<Dish> dishes = dishService.list(lqw);
-        return R.success(dishes);
-    }
+        List<DishDto> dishDtos =dishes.stream().map((item)->{
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(item,dishDto);
+            Long dishId = item.getId();
 
+            LambdaQueryWrapper<DishFlavor> lqw2 = new LambdaQueryWrapper<>();
+            lqw2.eq(DishFlavor::getDishId,dishId);
+            List<DishFlavor> flavors = dishFlavorService.list(lqw2);
+            dishDto.setFlavors(flavors);
+            return dishDto;
+        }).collect(Collectors.toList());
+        return R.success(dishDtos);
+    }
 }

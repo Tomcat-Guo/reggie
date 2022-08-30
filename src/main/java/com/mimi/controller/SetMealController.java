@@ -5,15 +5,13 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.mimi.common.R;
 import com.mimi.domain.*;
-import com.mimi.service.CategoryService;
-import com.mimi.service.DishService;
-import com.mimi.service.SetMealService;
-import com.mimi.service.ShoppingCartService;
+import com.mimi.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,6 +28,9 @@ public class SetMealController {
 
     @Autowired
     private DishService dishService;
+
+    @Autowired
+    private SetMealDishService  setMealDishService;
 
     @Autowired
     private ShoppingCartService shoppingCartService;
@@ -121,18 +122,24 @@ public class SetMealController {
     public R<List<Setmeal>> getByCategoryId(Setmeal setmeal){
         LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
         lqw.eq(setmeal.getCategoryId()!=null,Setmeal::getCategoryId,setmeal.getCategoryId());
-        lqw.eq(Setmeal::getStatus,1);
+        lqw.eq(setmeal.getStatus()!=null,Setmeal::getStatus,setmeal.getStatus());
         lqw.orderByDesc(Setmeal::getUpdateTime);
-        List<Setmeal> list = setMealService.list(lqw);
-        return R.success(list);
+        List<Setmeal> setmeals = setMealService.list(lqw);
+        return R.success(setmeals);
     }
 
     @GetMapping("/dish/{id}")
-    public R<ShoppingCart> getDishDetail(@PathVariable Long id){
-        LambdaQueryWrapper<ShoppingCart> lqw = new LambdaQueryWrapper<>();
-        lqw.eq(ShoppingCart::getDishId,id);
-        ShoppingCart shoppingCart = shoppingCartService.getOne(lqw);
-        return R.success(shoppingCart);
+    public R<List<Dish>> getDishDetail(@PathVariable Long id){
+        LambdaQueryWrapper<SetmealDish> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(SetmealDish::getSetmealId,id);
+        List<SetmealDish> list = setMealDishService.list(lqw);
+        List<Dish> dishList = new ArrayList<>();
+        for (SetmealDish setmealDish : list) {
+            Dish dish = dishService.getById(setmealDish.getDishId());
+            dishList.add(dish);
+        }
+
+        return R.success(dishList);
     }
 
 
