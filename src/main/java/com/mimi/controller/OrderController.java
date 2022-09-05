@@ -36,7 +36,7 @@ public class OrderController {
     }
 
     @GetMapping("/userPage")
-    public R<Page> page(Integer page, Integer pageSize){
+    public R<Page> userPage(Integer page, Integer pageSize){
         //构建分页查询器
         Page<Orders> ordersPage = new Page<>(page,pageSize);
         Page<OrdersDto> ordersDtoPage = new Page<>();
@@ -69,5 +69,13 @@ public class OrderController {
 
         ordersDtoPage.setRecords(ordersDtoList);
         return R.success(ordersDtoPage);
+    }
+
+    @GetMapping("/page")
+    public R<Page> page(Integer page, Integer pageSize){
+        Page<Orders> ordersPage = new Page<>(page,pageSize);
+        LambdaQueryWrapper<Orders> lqw = new LambdaQueryWrapper<>();
+        orderService.page(ordersPage, lqw);
+        return R.success(ordersPage);
     }
 }

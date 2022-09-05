@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/reggit</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="reggie@10.53.88.56" uuid="d55299fb-256e-4e36-a0b6-8af61ecf60b5">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://10.53.88.56:3306/reggie</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>
