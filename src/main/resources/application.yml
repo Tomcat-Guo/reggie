@@ -34,4 +34,4 @@ mybatis-plus:
 reggie:
 #  path: C:\Users\Tomcat\Desktop\reggie\reggie\src\main\resources\static\images\
 #  path: /Users/zhiqiang.guo/IdeaProjects/reggie/src/main/resources/static/images/
-  path: static/images/
+  path: src/main/resources/static/images/
