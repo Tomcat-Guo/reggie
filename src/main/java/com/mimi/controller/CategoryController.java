@@ -12,6 +12,7 @@ import com.mimi.service.DishService;
 import com.mimi.service.SetMealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +25,9 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     /**
      * 查询分类
      * @param page
@@ -32,6 +36,8 @@ public class CategoryController {
      */
     @GetMapping("/page")
     public R<Page> getCategoryPage(Integer page, Integer pageSize){
+        //redis里是否已经有key，没有就读取数据库
+
         //1. 构造分页构造器
         Page<Category> iPage = new Page<>(page, pageSize);
         //3. 构造条件构造器

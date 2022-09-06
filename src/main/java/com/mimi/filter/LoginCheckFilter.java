@@ -33,7 +33,8 @@ public class LoginCheckFilter implements Filter {
                 "/backend/**",
                 "/front/**",
                 "/user/login",
-                "/user/loginout"
+                "/user/loginout",
+                "/user/sendMsg"
         };
         // 对不需要处理的请求放行
         boolean check = check(urls, requestURI);

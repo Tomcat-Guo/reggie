@@ -1,5 +1,6 @@
 package com.mimi.config;
 
+import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
         redisTemplate.setKeySerializer(new StringRedisSerializer());
         redisTemplate.setHashKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(new StringRedisSerializer());
 
         redisTemplate.setConnectionFactory(connectionFactory);
         return redisTemplate;

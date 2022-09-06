@@ -14,8 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisClientConfig;
 
 import java.util.Map;
 import java.util.Set;
