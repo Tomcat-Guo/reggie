@@ -9,6 +9,12 @@ import com.mimi.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,6 +48,7 @@ public class SetMealController {
      * @return
      */
     @PostMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> save(@RequestBody SetmealDto setmealDto){
         setMealService.saveWithDish(setmealDto);
         return R.success("成功添加套餐");
@@ -97,6 +104,7 @@ public class SetMealController {
      * @return
      */
     @PutMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> update(@RequestBody SetmealDto setmealDto){
         setMealService.updateWithDish(setmealDto);
         return R.success("成功修改套餐");
@@ -108,6 +116,7 @@ public class SetMealController {
      * @return
      */
     @DeleteMapping
+    @CacheEvict(value = "setmealCache",allEntries = true)
     public R<String> delete(@RequestParam List<Long> id){
         setMealService.removeWithDish(id);
         return R.success("成功删除套餐");
@@ -119,6 +128,8 @@ public class SetMealController {
         return R.success("成功修改套餐状态");
     }
 
+
+    @Cacheable(value = "setmealCache",key = "#setmeal.categoryId + '_' + #setmeal.status")
     @GetMapping("/list")
     public R<List<Setmeal>> getByCategoryId(Setmeal setmeal){
         LambdaQueryWrapper<Setmeal> lqw = new LambdaQueryWrapper<>();
@@ -128,6 +139,7 @@ public class SetMealController {
         List<Setmeal> setmeals = setMealService.list(lqw);
         return R.success(setmeals);
     }
+
 
     @GetMapping("/dish/{id}")
     public R<List<Dish>> getDishDetail(@PathVariable Long id){
