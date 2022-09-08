@@ -43,23 +43,23 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request,response);
             return;
         }
-        log.info("本次请求{}需要处理",requestURI);
+//        log.info("本次请求{}需要处理",requestURI);
         //3. 对已登录放行
         Long empID = (Long) request.getSession().getAttribute("employee");
         Long userID = (Long) request.getSession().getAttribute("user");
         if (userID!=null){
-            log.info("已登录，ID：{}",userID);
+//            log.info("已登录，ID：{}",userID);
             BaseContext.setCurrentId(userID);
             filterChain.doFilter(request,response);
             return;
         }
         if (empID!=null){
-            log.info("已登录，ID：{}",empID);
+//            log.info("已登录，ID：{}",empID);
             BaseContext.setCurrentId(empID);
             filterChain.doFilter(request,response);
             return;
         }
-        log.info("未登录");
+//        log.info("未登录");
         //4. 拦截，用输入流返回error
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
     }

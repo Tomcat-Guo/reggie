@@ -12,6 +12,7 @@ import com.mimi.service.DishService;
 import com.mimi.service.SetMealService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,6 +35,7 @@ public class CategoryController {
      * @param pageSize
      * @return
      */
+    @Cacheable(value = "categoryCache",key = "#page+'_'+#pageSize")
     @GetMapping("/page")
     public R<Page> getCategoryPage(Integer page, Integer pageSize){
         //redis里是否已经有key，没有就读取数据库

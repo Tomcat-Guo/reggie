@@ -15,6 +15,8 @@ import com.mimi.service.DishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,6 +49,7 @@ public class DishController {
      * @param pageSize
      * @return
      */
+    @Cacheable(value = "dishCache",key = "#page+'_'+#pageSize+'_'+#name")
     @GetMapping("/page")
     public R<Page> getDishPage(Integer page, Integer pageSize, String name){
         //1. 构造分页构造器
@@ -91,6 +94,7 @@ public class DishController {
      * @param
      * @return
      */
+    @CacheEvict(value = "dishCache",allEntries = true)
     @PostMapping
     public R<String> addDish(@RequestBody DishDto dishDto){
         dishService.saveWithFlavor(dishDto);
@@ -104,6 +108,7 @@ public class DishController {
      * @param id
      * @return
      */
+    @CacheEvict(value = "dishCache",allEntries = true)
     @DeleteMapping
     public R<String> deleteDish(@RequestParam List<Long> id){
         dishService.deleteWithFlavor(id);
@@ -117,6 +122,7 @@ public class DishController {
      * @param
      * @return
      */
+    @CacheEvict(value = "dishCache",allEntries = true)
     @PostMapping("/status/{status}")
     public R<String> changeStatus(@PathVariable Integer status, @RequestParam List<Long> id){
         dishService.changeBulkStatus(status,id);
@@ -130,6 +136,7 @@ public class DishController {
         return R.success(dishDto);
     }
 
+    @CacheEvict(value = "dishCache",allEntries = true)
     @PutMapping
     public R<String> update(@RequestBody DishDto dishDto){
         dishService.updateWithFlavor(dishDto);
