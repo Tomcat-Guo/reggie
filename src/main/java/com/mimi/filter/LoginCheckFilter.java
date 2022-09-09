@@ -34,7 +34,11 @@ public class LoginCheckFilter implements Filter {
                 "/front/**",
                 "/user/login",
                 "/user/loginout",
-                "/user/sendMsg"
+                "/user/sendMsg",
+                "/doc.html",
+                "/webjars/**",
+                "/swagger-resources",
+                "/v2/api-docs"
         };
         // 对不需要处理的请求放行
         boolean check = check(urls, requestURI);
@@ -43,7 +47,7 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request,response);
             return;
         }
-//        log.info("本次请求{}需要处理",requestURI);
+        log.info("本次请求{}需要处理",requestURI);
         //3. 对已登录放行
         Long empID = (Long) request.getSession().getAttribute("employee");
         Long userID = (Long) request.getSession().getAttribute("user");
@@ -59,7 +63,7 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request,response);
             return;
         }
-//        log.info("未登录");
+        log.info("未登录");
         //4. 拦截，用输入流返回error
         response.getWriter().write(JSON.toJSONString(R.error("NOTLOGIN")));
     }

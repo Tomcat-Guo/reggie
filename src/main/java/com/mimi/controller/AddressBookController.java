@@ -6,6 +6,10 @@ import com.mimi.common.BaseContext;
 import com.mimi.common.R;
 import com.mimi.domain.AddressBook;
 import com.mimi.service.AddressBookService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,10 +19,12 @@ import java.util.List;
 @RestController
 @RequestMapping("/addressBook")
 @Slf4j
+@Api(tags = "地址簿接口")
 public class AddressBookController {
     @Autowired
     private AddressBookService addressBookService;
 
+    @ApiOperation("新增地址")
     @PostMapping
     public R<AddressBook> save(@RequestBody AddressBook addressBook){
         addressBook.setUserId(BaseContext.getCurrentID());
@@ -56,6 +62,8 @@ public class AddressBookController {
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("通过id查询地址")
+//    @ApiImplicitParam("地址id")
     public R getOne(@PathVariable Long id){
         AddressBook addressBook = addressBookService.getById(id);
         if (null != addressBook){

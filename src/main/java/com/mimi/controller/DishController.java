@@ -12,6 +12,10 @@ import com.mimi.domain.DishFlavor;
 import com.mimi.service.CategoryService;
 import com.mimi.service.DishFlavorService;
 import com.mimi.service.DishService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +33,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/dish")
 @Slf4j
+@Api(tags = "菜品接口")
 public class DishController {
 
     @Autowired
@@ -49,6 +54,12 @@ public class DishController {
      * @param pageSize
      * @return
      */
+    @ApiOperation("分页查询")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页码", required = true),
+            @ApiImplicitParam(name = "pageSize", value = "每页记录数", required = true),
+            @ApiImplicitParam(name = "page", value = "菜名", required = false)
+    })
     @Cacheable(value = "dishCache",key = "#page+'_'+#pageSize+'_'+#name")
     @GetMapping("/page")
     public R<Page> getDishPage(Integer page, Integer pageSize, String name){
@@ -94,6 +105,7 @@ public class DishController {
      * @param
      * @return
      */
+    @ApiOperation("新增菜品接口")
     @CacheEvict(value = "dishCache",allEntries = true)
     @PostMapping
     public R<String> addDish(@RequestBody DishDto dishDto){
@@ -108,6 +120,7 @@ public class DishController {
      * @param id
      * @return
      */
+    @ApiOperation("删除菜品接口")
     @CacheEvict(value = "dishCache",allEntries = true)
     @DeleteMapping
     public R<String> deleteDish(@RequestParam List<Long> id){
@@ -145,6 +158,7 @@ public class DishController {
         return R.success("成功修改菜品");
     }
 
+    @ApiOperation("菜品条件查询接口")
     @GetMapping("/list")
     public R<List<DishDto>> getByCategoryId(Dish dish){
         List<DishDto> dishDtos = null;
